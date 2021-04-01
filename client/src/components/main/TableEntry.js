@@ -10,7 +10,7 @@ const TableEntry = (props) => {
     const due_date = data.due_date;
     const status = data.completed ? 'complete' : 'incomplete';
     const [editingDate, toggleDateEdit] = useState(false);
-    const [editingDescr, toggleDescrEdit] = useState(false);
+    const [editingDescr, toggleDescrEdit] = useState(false);//hook
     const [editingStatus, toggleStatusEdit] = useState(false);
 
     const handleDateEdit = (e) => {

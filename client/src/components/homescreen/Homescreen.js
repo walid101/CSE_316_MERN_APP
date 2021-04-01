@@ -14,7 +14,8 @@ import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
 import { UpdateListField_Transaction, 
 	UpdateListItems_Transaction, 
 	ReorderItems_Transaction, 
-	EditItem_Transaction } 				from '../../utils/jsTPS';
+	EditItem_Transaction,
+	SortItems_Transaction} 				from '../../utils/jsTPS';
 import WInput from 'wt-frontend/build/components/winput/WInput';
 
 
@@ -24,6 +25,9 @@ const Homescreen = (props) => {
 	const [activeList, setActiveList] 		= useState({});
 	const [showDelete, toggleShowDelete] 	= useState(false);
 	const [showLogin, toggleShowLogin] 		= useState(false);
+	/*
+	const [nameOfNewStateVar , nameOfFunctionThatChangesValsOfNewStateVar] = useState(initialVal);
+	*/
 	const [showCreate, toggleShowCreate] 	= useState(false);
 
 	const [ReorderTodoItems] 		= useMutation(mutations.REORDER_ITEMS);
@@ -33,7 +37,7 @@ const Homescreen = (props) => {
 	const [DeleteTodoItem] 			= useMutation(mutations.DELETE_ITEM);
 	const [AddTodolist] 			= useMutation(mutations.ADD_TODOLIST);
 	const [AddTodoItem] 			= useMutation(mutations.ADD_ITEM);
-
+	const [SortItems] 				= useMutation(mutations.SORT_ITEMS);
 
 	const { loading, error, data, refetch } = useQuery(GET_DB_TODOS);
 	if(loading) { console.log(loading, 'loading'); }
@@ -69,7 +73,7 @@ const Homescreen = (props) => {
 
 	// Creates a default item and passes it to the backend resolver.
 	// The return id is assigned to the item, and the item is appended
-	//  to the local cache copy of the active todolist. 
+	// to the local cache copy of the active todolist. 
 	const addItem = async () => {
 		let list = activeList;
 		const items = list.items;
@@ -125,7 +129,20 @@ const Homescreen = (props) => {
 		tpsRedo();
 
 	};
-
+	const sortAllItems = async (colNum, clickNum) => {
+		let listID = activeList._id;
+		let arr = [];
+		for(let i = 0; i<activeList.items.length; i++)
+		{
+			arr.push(activeList.items[i].id);
+		}
+		let transaction = new SortItems_Transaction(listID, colNum, clickNum, arr, SortItems);
+		props.tps.addTransaction(transaction);
+		//console.log(colNum);
+		tpsRedo();//do transaction
+		//console.log(activeList.items[0]);
+		//props.tps.doTransaction();
+	}
 	const createNewList = async () => {
 		const length = todolists.length
 		const id = length >= 1 ? todolists[length - 1].id + Math.floor((Math.random() * 100) + 1) : 1;
@@ -223,7 +240,7 @@ const Homescreen = (props) => {
 								<MainContents
 									addItem={addItem} deleteItem={deleteItem}
 									editItem={editItem} reorderItem={reorderItem}
-									setShowDelete={setShowDelete}
+									setShowDelete={setShowDelete} sortList = {sortAllItems}
 									activeList={activeList} setActiveList={setActiveList}
 								/>
 							</div>

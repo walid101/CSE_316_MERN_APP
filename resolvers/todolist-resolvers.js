@@ -162,8 +162,98 @@ module.exports = {
 			// return old ordering if reorder was unsuccessful
 			listItems = found.items;
 			return (found.items);
-
+		},
+		/**
+			@param 	 {object} args - contains list id, column to sort -> t[1] ,d[2] ,s[3] , number of clicks
+			@returns {array} the reordered item array on success, or initial ordering on failure
+		**/
+		sortItems: async (_, args) => {//done
+			const { _id, colNum, clickNum, prevList, execute} = args;
+			const listId = new ObjectId(_id);
+			const found = await Todolist.findOne({_id: listId});
+			let listItems = found.items;
+			let preList = new Array(prevList.length);
+			console.log(prevList);
+			if(execute === 0)//THIS IS REDO SETTER
+			{
+				console.log("UNDO!");
+				for(let i = 0; i<prevList.length; i++)
+				{
+					for(let j = 0; j<prevList.length; j++)
+					{
+						if(listItems[j].id == prevList[i])//found the item
+						{
+							preList[i] = listItems[j];
+						}
+					}
+				}
+				//console.log(preList);
+				//go through prevList id's and reconstruct original toDoList
+				
+				const updated = await Todolist.updateOne({_id: listId}, { items: preList })
+				if(updated) return (preList);
+			
+			}
+			//if clicked is odd then it should be order least -> greatest, else greatest -> least
+			if(clickNum % 2 == 1)
+			{
+				if(colNum == 1)
+				{
+					listItems.sort(function compare(a, b) {
+						if(a.description>b.description){return 1;}
+						if(a.description<b.description){return -1;}
+						return 0;
+					});
+				}
+				if(colNum == 2)
+				{
+					listItems.sort(function compare(a, b) {
+						if(a.due_date>b.due_date){return 1;}
+						if(a.due_date<b.due_date){return -1;}
+						return 0;
+					});
+				}
+				if(colNum == 3)//incomplete first then complete
+				{
+					listItems.sort(function compare(a, b) {
+						if(a.completed === false && b.completed !== false){return -1;}
+						if(b.completed === false && a.completed !== false){return 1;}
+						return 0;
+					});
+				}
+			}
+			else
+			{
+				if(colNum == 1)
+				{
+					listItems.sort(function compare(a, b) {
+						if(a.description>b.description){return -1;}
+						if(a.description<b.description){return 1;}
+						return 0;
+					});
+				}
+				if(colNum == 2)
+				{
+					listItems.sort(function compare(a, b) {
+						if(a.due_date>b.due_date){return -1;}
+						if(a.due_date<b.due_date){return 1;}
+						return 0;
+					});
+				}
+				if(colNum == 3)//incomplete first then complete
+				{
+					listItems.sort(function compare(a, b) {
+						if(a.completed === false && b.completed == true){return 1;}
+						if(b.completed === false && a.completed == true){return -1;}
+						return 0;
+					});
+				}
+			}
+			const updated = await Todolist.updateOne({_id: listId}, { items: listItems })
+			if(updated) return (listItems);
+			// return old ordering if reorder was unsuccessful
+			listItems = found.items;
+			return (found.items);
 		}
-
 	}
 }
