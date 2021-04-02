@@ -5,6 +5,7 @@ const TableEntry = (props) => {
     const { data } = props;
 
     const completeStyle = data.completed ? ' complete-task' : ' incomplete-task';
+    const assignedStyle = data.completed ? ' assign-black' : 'assign-red';
 
     const assigned_to = data.assigned_to;
     const description = data.description;
@@ -91,11 +92,12 @@ const TableEntry = (props) => {
             {
                     editingAssign || assigned_to === ''
                     ? <WInput
-                        className='table-input' onBlur={handleAssignEdit}
+                        className= "table-input" onBlur={handleAssignEdit}
                         autoFocus={true} defaultValue={assigned_to} type='text'
                         wType="outlined" barAnimation="solid" inputClass="table-input-class"
+                        color = "blue"
                     />
-                    : <div className="table-text"
+                    : <div className={`${assignedStyle} table-text`}
                         onClick={() => toggleAssignEdit(!editingAssign)}
                     >{assigned_to}
                     </div>
