@@ -174,7 +174,7 @@ module.exports = {
 			let listItems = found.items;
 			let preList = new Array(prevList.length);
 			console.log(prevList);
-			if(execute === 0)//THIS IS REDO SETTER
+			if(execute === 0)//THIS IS UNDO SETTER
 			{
 				console.log("UNDO!");
 				for(let i = 0; i<prevList.length; i++)

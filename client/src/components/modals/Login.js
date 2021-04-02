@@ -37,10 +37,10 @@ const Login = (props) => {
 	return (
         // Replace div with WModal
 
-		<div className="login-modal">
-			<div className="modal-header" onClose={() => props.setShowLogin(false)}>
+		<WModal className="login-modal" visible = {props.showLogin}>
+			<WMHeader className="modal-header" onClose={() => props.setShowLogin(false)}>
 				Login
-			</div>
+			</WMHeader>
 
 			{
 				loading ? <div />
@@ -59,12 +59,12 @@ const Login = (props) => {
 
 					</div>
 			}
-			<div>
+			<WMFooter>
 				<WButton className="modal-button" onClick={handleLogin} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="primary">
 					Login
 				</WButton>
-			</div>
-		</div>
+			</WMFooter>
+		</WModal>
 	);
 }
 
