@@ -23,13 +23,13 @@ const TableHeader = (props) => {
     }
     return (
         <WRow className="table-header">  
-            <WCol size="4">
+            <WCol size="5">
                 <WButton className='table-header-section' wType="texted" onClick = {
                     handleTaskClick
                 }>Task</WButton>
             </WCol>
 
-            <WCol size="3">
+            <WCol size="2">
                 <WButton className='table-header-section' wType="texted" onClick = {
                     handleDateClick
                 }>Due Date</WButton>
@@ -40,8 +40,12 @@ const TableHeader = (props) => {
                     handleStatClick
                 }>Status</WButton>
             </WCol>
-
-            <WCol size="3">
+            <WCol size = "2">
+            <WButton className='table-header-section' wType="texted" onClick = {
+                    handleStatClick
+                }>Assign. To</WButton>
+            </WCol>
+            <WCol size="1">
                 <div className="table-header-buttons">
                     <WButton onClick={props.disabled ? clickDisabled : props.addItem} wType="texted" className={`${buttonStyle}`}>
                         <i className="material-icons">add_box</i>

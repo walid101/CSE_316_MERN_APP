@@ -6,13 +6,21 @@ const TableEntry = (props) => {
 
     const completeStyle = data.completed ? ' complete-task' : ' incomplete-task';
 
+    const assigned_to = data.assigned_to;
     const description = data.description;
     const due_date = data.due_date;
     const status = data.completed ? 'complete' : 'incomplete';
     const [editingDate, toggleDateEdit] = useState(false);
     const [editingDescr, toggleDescrEdit] = useState(false);//hook
     const [editingStatus, toggleStatusEdit] = useState(false);
+    const [editingAssign, toggleAssignEdit] = useState(false);
 
+    const handleAssignEdit = (e) => {
+        toggleAssignEdit(false);
+        const newAssign = e.target.value ? e.target.value : 'No Assign.'
+        const prevAssign = assigned_to;
+        props.editItem(data._id, 'assigned_to', newAssign, prevAssign);
+    };
     const handleDateEdit = (e) => {
         toggleDateEdit(false);
         const newDate = e.target.value ? e.target.value : 'No Date';
@@ -36,7 +44,7 @@ const TableEntry = (props) => {
 
     return (
         <WRow className='table-entry'>
-            <WCol size="4">
+            <WCol size="5">
                 {
                     editingDescr || description === ''
                         ? <WInput
@@ -51,7 +59,7 @@ const TableEntry = (props) => {
                 }
             </WCol>
 
-            <WCol size="3">
+            <WCol size="2">
                 {
                     editingDate ? <input
                         className='table-input' onBlur={handleDateEdit}
@@ -79,8 +87,21 @@ const TableEntry = (props) => {
                         </div>
                 }
             </WCol>
-
-            <WCol size="3">
+            <WCol size = "2">
+            {
+                    editingAssign || assigned_to === ''
+                    ? <WInput
+                        className='table-input' onBlur={handleAssignEdit}
+                        autoFocus={true} defaultValue={assigned_to} type='text'
+                        wType="outlined" barAnimation="solid" inputClass="table-input-class"
+                    />
+                    : <div className="table-text"
+                        onClick={() => toggleAssignEdit(!editingAssign)}
+                    >{assigned_to}
+                    </div>
+            }
+            </WCol>
+            <WCol size="1">
                 <div className='button-group'>
                     <WButton className="table-entry-buttons" onClick={() => props.reorderItem(data._id, -1)} wType="texted">
                         <i className="material-icons">expand_less</i>
