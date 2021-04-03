@@ -10,7 +10,7 @@ const TableHeader = (props) => {
     const [dateClick, updateDateClick] = useState(1);
     const [statClick, updateStatClick] = useState(1);
     const handleTaskClick = (e) => {
-        updateTaskClick(taskClick+1);
+        updateTaskClick(taskClick+1);//odd = sort less to great , even => great to less
         props.sortList(1, taskClick);
     }
     const handleDateClick = (e) => {

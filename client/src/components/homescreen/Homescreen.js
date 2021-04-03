@@ -129,19 +129,21 @@ const Homescreen = (props) => {
 		tpsRedo();
 
 	};
+	//when the user clicks, threading -> multiple at once
 	const sortAllItems = async (colNum, clickNum) => {
-		let listID = activeList._id;
-		let arr = [];
-		for(let i = 0; i<activeList.items.length; i++)
-		{
-			arr.push(activeList.items[i].id);
-		}
-		let transaction = new SortItems_Transaction(listID, colNum, clickNum, arr, SortItems);
-		props.tps.addTransaction(transaction);
-		//console.log(colNum);
-		tpsRedo();//do transaction
-		//console.log(activeList.items[0]);
-		//props.tps.doTransaction();
+		if(activeList.items !== undefined)
+		{	
+			let listID = activeList._id;
+			let arr = [];
+			for(let i = 0; i<activeList.items.length; i++)
+			{
+				arr.push(activeList.items[i].id);
+			}
+			let transaction = new SortItems_Transaction(listID, colNum, clickNum, arr, SortItems);
+			props.tps.addTransaction(transaction);
+			//console.log(colNum);
+			tpsRedo();//do transaction
+		}	
 	}
 	const createNewList = async () => {
 		const length = todolists.length

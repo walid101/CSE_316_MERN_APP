@@ -184,6 +184,7 @@ module.exports = {
 						if(listItems[j].id == prevList[i])//found the item
 						{
 							preList[i] = listItems[j];
+							j = prevList.length;
 						}
 					}
 				}
@@ -200,8 +201,12 @@ module.exports = {
 				if(colNum == 1)
 				{
 					listItems.sort(function compare(a, b) {
-						if(a.description>b.description){return 1;}
-						if(a.description<b.description){return -1;}
+						//console.log(a.description);
+						//console.log(b.description);
+						//console.log(a.description > b.description);
+						//console.log(" ");
+						if(a.description.toLowerCase()>b.description.toLowerCase()){return 1;}
+						if(a.description.toLowerCase()<b.description.toLowerCase()){return -1;}
 						return 0;
 					});
 				}
@@ -227,8 +232,8 @@ module.exports = {
 				if(colNum == 1)
 				{
 					listItems.sort(function compare(a, b) {
-						if(a.description>b.description){return -1;}
-						if(a.description<b.description){return 1;}
+						if(a.description.toLowerCase()>b.description.toLowerCase()){return -1;}
+						if(a.description.toLowerCase()<b.description.toLowerCase()){return 1;}
 						return 0;
 					});
 				}
