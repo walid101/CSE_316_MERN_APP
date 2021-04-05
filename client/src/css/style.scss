@@ -63,6 +63,7 @@ html, body {
 
 .list-item-active {
     background-color: var(--deep-blue);
+    color: #fca234;
 }
 
 .list-item {
@@ -191,4 +192,16 @@ html, body {
 
 .table-entry-buttons {
     color: $text-color;
+}
+.assign-black {
+    color: #000;
+}
+.assign-red {
+    color: crimson;
+}
+.list_black {
+    color: white;
+}
+.list_yellow {
+    color: --bright-orange;
 }

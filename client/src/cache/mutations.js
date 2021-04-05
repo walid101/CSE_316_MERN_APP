@@ -12,7 +12,6 @@ export const LOGIN = gql`
 		}
 	}
 `;
-
 export const REGISTER = gql`
 	mutation Register($email: String!, $password: String!, $firstName: String!, $lastName: String!) {
 		register(email: $email, password: $password, firstName: $firstName, lastName: $lastName) {
@@ -83,6 +82,11 @@ export const SORT_ITEMS = gql`
 			assigned_to
 			completed
 		}
+	}
+`;
+export const SWAP_TOP = gql`
+	mutation swapTop($todolist: TodoInput!) {
+		swap_top(todolist: $todolist)
 	}
 `;
 export const ADD_TODOLIST = gql`

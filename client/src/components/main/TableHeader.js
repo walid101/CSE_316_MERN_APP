@@ -23,6 +23,20 @@ const TableHeader = (props) => {
     }
     return (
         <WRow className="table-header">  
+            <WCol size = "11"></WCol>
+            <WCol size="1">
+                <div className="table-header-buttons">
+                    <WButton onClick={props.disabled ? clickDisabled : props.addItem} wType="texted" className={`${buttonStyle}`}>
+                        <i className="material-icons">add_box</i>
+                    </WButton>
+                    <WButton onClick={props.disabled ? clickDisabled : props.setShowDelete} wType="texted" className={`${buttonStyle}`}>
+                        <i className="material-icons">delete_outline</i>
+                    </WButton>
+                    <WButton onClick={props.disabled ? clickDisabled : () => {props.clearTransactions(); props.setActiveList({})}} wType="texted" className={`${buttonStyle}`}>
+                        <i className="material-icons">close</i>
+                    </WButton>
+                </div>
+            </WCol>
             <WCol size="5">
                 <WButton className='table-header-section' wType="texted" onClick = {
                     handleTaskClick
@@ -45,20 +59,14 @@ const TableHeader = (props) => {
                     handleStatClick
                 }>Assign. To</WButton>
             </WCol>
-            <WCol size="1">
-                <div className="table-header-buttons">
-                    <WButton onClick={props.disabled ? clickDisabled : props.addItem} wType="texted" className={`${buttonStyle}`}>
-                        <i className="material-icons">add_box</i>
-                    </WButton>
-                    <WButton onClick={props.disabled ? clickDisabled : props.setShowDelete} wType="texted" className={`${buttonStyle}`}>
-                        <i className="material-icons">delete_outline</i>
-                    </WButton>
-                    <WButton onClick={props.disabled ? clickDisabled : () => props.setActiveList({})} wType="texted" className={`${buttonStyle}`}>
-                        <i className="material-icons">close</i>
-                    </WButton>
-                </div>
+            <WCol size = "1">
+                <WButton className="sidebar-buttons undo-redo" onClick={props.undo} wType="texted" clickAnimation="ripple-light" shape="rounded">
+                <i className="material-icons">undo</i>
+                </WButton>
+                <WButton className="sidebar-buttons undo-redo redo" onClick={props.redo} wType="texted" clickAnimation="ripple-light" shape="rounded">
+                    <i className="material-icons">redo</i>
+                </WButton>
             </WCol>
-
         </WRow>
     );
 };

@@ -38,6 +38,7 @@ const Homescreen = (props) => {
 	const [AddTodolist] 			= useMutation(mutations.ADD_TODOLIST);
 	const [AddTodoItem] 			= useMutation(mutations.ADD_ITEM);
 	const [SortItems] 				= useMutation(mutations.SORT_ITEMS);
+	const [SwapTopList]				= useMutation(mutations.SWAP_TOP);
 
 	const { loading, error, data, refetch } = useQuery(GET_DB_TODOS);
 	if(loading) { console.log(loading, 'loading'); }
@@ -145,6 +146,9 @@ const Homescreen = (props) => {
 			tpsRedo();//do transaction
 		}	
 	}
+	const clearTransactions = async () => {
+		props.tps.clearAllTransactions();
+	}
 	const createNewList = async () => {
 		const length = todolists.length
 		const id = length >= 1 ? todolists[length - 1].id + Math.floor((Math.random() * 100) + 1) : 1;
@@ -157,9 +161,11 @@ const Homescreen = (props) => {
 		}
 		const { data } = await AddTodolist({ variables: { todolist: list }, refetchQueries: [{ query: GET_DB_TODOS }] });
 		setActiveList(list)
+		props.tps.clearAllTransactions();
 	};
 
 	const deleteList = async (_id) => {
+		props.tps.clearAllTransactions();
 		DeleteTodolist({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_TODOS }] });
 		refetch();
 		setActiveList({});
@@ -171,7 +177,9 @@ const Homescreen = (props) => {
 		tpsRedo();
 
 	};
+	const placeFirst = (id) => {
 
+	}
 	const handleSetActive = (id) => {
 		const todo = todolists.find(todo => todo.id === id || todo._id === id);
 		setActiveList(todo);
@@ -240,10 +248,12 @@ const Homescreen = (props) => {
 					activeList ? 
 							<div className="container-secondary">
 								<MainContents
+									clearTransactions={clearTransactions}
 									addItem={addItem} deleteItem={deleteItem}
 									editItem={editItem} reorderItem={reorderItem}
 									setShowDelete={setShowDelete} sortList = {sortAllItems}
 									activeList={activeList} setActiveList={setActiveList}
+									undo={tpsUndo} redo={tpsRedo}
 								/>
 							</div>
 						:

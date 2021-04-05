@@ -4,7 +4,7 @@ import { WNavItem, WInput } from 'wt-frontend';
 const SidebarEntry = (props) => {
     const [editing, toggleEditing] = useState(false);
     const [preEdit, setPreEdit] = useState(props.name);
-
+    const list_text = props.activeid == props.id ? "list_yellow" : "list_black";
     const handleEditing = (e) => {
         e.stopPropagation();
         setPreEdit(props.name);
@@ -16,7 +16,6 @@ const SidebarEntry = (props) => {
         const { name, value } = e.target;
         props.updateListField(props._id, name, value, preEdit);
     };
-
     const entryStyle = props.id === props.activeid ? 'list-item list-item-active' : 'list-item ';
     
     return (
