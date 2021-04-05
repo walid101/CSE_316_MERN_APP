@@ -54,14 +54,27 @@ module.exports = {
 		 	@param 	 {object} args - an empty todolist object
 			@returns {string} the objectID of the todolist or an error message
 		**/
-		/*
-		swap_top: async(_, args) => {
-			const{ _id} = args;
-			const listId = new ObjectId(_id);
-			found = todolists[0];
-			for(let i = 0; i<todolists.items.length)
+		swap_top: async (_, args) => {
+			const {thisId, topId} = args;
+			let thisIndex = -1;
+			for(let i = 0; i<todolists.items.length; i++)
+			{
+				if(thisId === todolists.items[i].id)
+				{
+					thisIndex = i;
+					i = todolists.items.length;
+				}
+			}
+			if(thisIndex != -1)
+			{
+				let newList = todolists.items;
+				let topItem = newList.items[0];
+				newList.items[0] = newList.items[thisIndex];
+				newList.items[thisIndex] = topItem;
+				const updated = await todolists.updateItemField({items: newList});
+			}
+			return thisId;
 		},
-		*/
 		addTodolist: async (_, args) => {
 			const { todolist } = args;
 			const objectId = new ObjectId();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } 	from 'react';
+import React, {useState, useEffect } 	from 'react';
 import Logo 							from '../navbar/Logo';
 import NavbarOptions 					from '../navbar/NavbarOptions';
 import MainContents 					from '../main/MainContents';
@@ -25,6 +25,9 @@ const Homescreen = (props) => {
 	const [activeList, setActiveList] 		= useState({});
 	const [showDelete, toggleShowDelete] 	= useState(false);
 	const [showLogin, toggleShowLogin] 		= useState(false);
+	const [swapTopIndex, toggleTopIndex] 	= useState(-1);
+	const [, updateState] = React.useState();
+	const forceUpdate = React.useCallback(() => updateState({}), []);
 	/*
 	const [nameOfNewStateVar , nameOfFunctionThatChangesValsOfNewStateVar] = useState(initialVal);
 	*/
@@ -177,9 +180,21 @@ const Homescreen = (props) => {
 		tpsRedo();
 
 	};
-	const placeFirst = (id) => {
-
-	}
+	const swapToTop = async (swapId) =>
+	{
+		let index = -1;
+		for(let i = 0; i<todolists.length; i++)
+		{
+			if(todolists[i].id === swapId)
+			{
+				index = i;
+				i = todolists.length;
+			}
+		}
+		toggleTopIndex(index);
+		console.log("swapTopIndex: ", swapTopIndex);
+		forceUpdate();
+	};
 	const handleSetActive = (id) => {
 		const todo = todolists.find(todo => todo.id === id || todo._id === id);
 		setActiveList(todo);
@@ -237,6 +252,8 @@ const Homescreen = (props) => {
 								handleSetActive={handleSetActive} createNewList={createNewList}
 								undo={tpsUndo} redo={tpsRedo}
 								updateListField={updateListField}
+								swapToTop = {swapToTop}
+								topIndex = {swapTopIndex}
 							/>
 							:
 							<></>

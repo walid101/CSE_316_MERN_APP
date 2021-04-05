@@ -85,8 +85,8 @@ export const SORT_ITEMS = gql`
 	}
 `;
 export const SWAP_TOP = gql`
-	mutation swapTop($todolist: TodoInput!) {
-		swap_top(todolist: $todolist)
+	mutation swapTop($swapId: Int) {
+		swap_top(swapId: $swapId)
 	}
 `;
 export const ADD_TODOLIST = gql`
