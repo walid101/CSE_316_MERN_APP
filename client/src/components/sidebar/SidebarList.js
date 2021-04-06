@@ -7,10 +7,10 @@ const SidebarList = (props) => {
         console.log("to the top!");
         let index = props.topIndex;
         let todoLists = props.todolists;
-        let newList = [];
+        let newList = []; // <- Rendered
         if(index!=-1)
         {
-            console.log("top index is not -1!");
+            //console.log("top index is not -1!");
             newList.push(
             <SidebarEntry
                 handleSetActive={props.handleSetActive} activeid={props.activeid}
@@ -34,7 +34,7 @@ const SidebarList = (props) => {
             index = -1
             return newList;
         }
-        console.log("top index IS -1!");
+        //console.log("top index IS -1!");
         return props.todolists.map(todo => (
                 <SidebarEntry
                     handleSetActive={props.handleSetActive} activeid={props.activeid}
@@ -47,6 +47,7 @@ const SidebarList = (props) => {
     return (
         <>
             {
+                //setSideLists()
                 props.todolists && setSideLists()
                 /*
                 props.todolists.map(todo => (

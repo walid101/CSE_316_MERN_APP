@@ -63,7 +63,7 @@ html, body {
 
 .list-item-active {
     background-color: var(--deep-blue);
-    color: #fca234;
+    color: #ffc800;
 }
 
 .list-item {
@@ -204,4 +204,10 @@ html, body {
 }
 .list_yellow {
     color: --bright-orange;
+}
+.topArrow-white {
+    color: white;
+}
+.topArrow-black {
+    color: black
 }

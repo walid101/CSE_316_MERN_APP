@@ -12,11 +12,14 @@ const MainContents = (props) => {
                 clearTransactions = {props.clearTransactions}
                 undo = {props.undo}
                 redo = {props.redo}
+                hasUndo={props.hasUndo}
+                hasRedo={props.hasRedo}
             />
             <TableContents
                 key={props.activeList.id} activeList={props.activeList}
                 deleteItem={props.deleteItem} reorderItem={props.reorderItem}
                 editItem={props.editItem}
+                topId = {props.topId}
             />
         </div>
     );

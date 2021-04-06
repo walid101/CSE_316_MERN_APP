@@ -46,7 +46,6 @@ module.exports = {
 			if(index < 0) listItems.push(item);
    			else listItems.splice(index, 0, item);
 			const updated = await Todolist.updateOne({_id: listId}, { items: listItems });
-
 			if(updated) return (item._id);
 			else return ('Could not add item');
 		},
@@ -104,7 +103,6 @@ module.exports = {
 			const updated = await Todolist.updateOne({_id: listId}, { items: listItems })
 			if(updated) return (listItems);
 			else return (found.items);
-
 		},
 		/** 
 		 	@param 	 {object} args - a todolist objectID 

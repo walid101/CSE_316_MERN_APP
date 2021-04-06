@@ -18,7 +18,6 @@ import { UpdateListField_Transaction,
 	SortItems_Transaction} 				from '../../utils/jsTPS';
 import WInput from 'wt-frontend/build/components/winput/WInput';
 
-
 const Homescreen = (props) => {
 
 	let todolists 							= [];
@@ -99,7 +98,7 @@ const Homescreen = (props) => {
 	};
 
 
-	const deleteItem = async (item) => {
+	const deleteItem = async (item, index) => {
 		let listID = activeList._id;
 		let itemID = item._id;
 		let opcode = 0;
@@ -111,7 +110,7 @@ const Homescreen = (props) => {
 			assigned_to: item.assigned_to,
 			completed: item.completed
 		}
-		let transaction = new UpdateListItems_Transaction(listID, itemID, itemToDelete, opcode, AddTodoItem, DeleteTodoItem);
+		let transaction = new UpdateListItems_Transaction(listID, itemID, itemToDelete, opcode, AddTodoItem, DeleteTodoItem, index);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	};
@@ -127,6 +126,7 @@ const Homescreen = (props) => {
 	};
 
 	const reorderItem = async (itemID, dir) => {
+		console.log(activeList.items);
 		let listID = activeList._id;
 		let transaction = new ReorderItems_Transaction(listID, itemID, dir, ReorderTodoItems);
 		props.tps.addTransaction(transaction);
@@ -169,6 +169,7 @@ const Homescreen = (props) => {
 
 	const deleteList = async (_id) => {
 		props.tps.clearAllTransactions();
+		toggleTopIndex(-1);
 		DeleteTodolist({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_TODOS }] });
 		refetch();
 		setActiveList({});
@@ -192,7 +193,7 @@ const Homescreen = (props) => {
 			}
 		}
 		toggleTopIndex(index);
-		console.log("swapTopIndex: ", swapTopIndex);
+		//console.log("swapTopIndex: ", swapTopIndex);
 		forceUpdate();
 	};
 	const handleSetActive = (id) => {
@@ -271,6 +272,8 @@ const Homescreen = (props) => {
 									setShowDelete={setShowDelete} sortList = {sortAllItems}
 									activeList={activeList} setActiveList={setActiveList}
 									undo={tpsUndo} redo={tpsRedo}
+									hasUndo={props.tps.hasTransactionToUndo()}
+									hasRedo={props.tps.hasTransactionToRedo()}
 								/>
 							</div>
 						:

@@ -5,6 +5,13 @@ import { WButton, WRow, WCol } from 'wt-frontend';
 const TableHeader = (props) => {
 
     const buttonStyle = props.disabled ? ' table-header-button-disabled ' : 'table-header-button ';
+    const redoStyle = props.hasRedo ? ' topArrow-white' : ' topArrow-black';
+    let undoStyle = ' topArrow-white';
+    console.log("hasRedo? : " , props.hasRedo);
+    if(props.hasUndo === false)
+    {
+        undoStyle = ' topArrow-black';
+    }
     const clickDisabled = () => { };
     const [taskClick, updateTaskClick] = useState(1);
     const [dateClick, updateDateClick] = useState(1);
@@ -60,10 +67,10 @@ const TableHeader = (props) => {
                 }>Assign. To</WButton>
             </WCol>
             <WCol size = "1">
-                <WButton className="sidebar-buttons undo-redo" onClick={props.undo} wType="texted" clickAnimation="ripple-light" shape="rounded">
+                <WButton className={`sidebar-buttons undo-redo ${undoStyle}`} onClick={props.undo} wType="texted" clickAnimation="ripple-light" shape="rounded">
                 <i className="material-icons">undo</i>
                 </WButton>
-                <WButton className="sidebar-buttons undo-redo redo" onClick={props.redo} wType="texted" clickAnimation="ripple-light" shape="rounded">
+                <WButton className={`sidebar-buttons undo-redo redo" ${redoStyle}`} onClick={props.redo} wType="texted" clickAnimation="ripple-light" shape="rounded">
                     <i className="material-icons">redo</i>
                 </WButton>
             </WCol>
