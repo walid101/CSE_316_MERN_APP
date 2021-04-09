@@ -25,6 +25,7 @@ const Homescreen = (props) => {
 	const [showDelete, toggleShowDelete] 	= useState(false);
 	const [showLogin, toggleShowLogin] 		= useState(false);
 	const [swapTopIndex, toggleTopIndex] 	= useState(-1);
+	const [runId, toggleRunId] 				= useState(0);	
 	const [, updateState] = React.useState();
 	const forceUpdate = React.useCallback(() => updateState({}), []);
 	/*
@@ -80,7 +81,10 @@ const Homescreen = (props) => {
 	const addItem = async () => {
 		let list = activeList;
 		const items = list.items;
-		const lastID = items.length >= 1 ? items[items.length - 1].id + 1 : 0;
+		//const lastID = items.length >= 1 ? items[items.length - 1].id + 1 : 0;
+		const lastID = runId;
+		toggleRunId(runId + 1);
+		//console.log("LAST IF IS: ", lastID);
 		const newItem = {
 			_id: '',
 			id: lastID,

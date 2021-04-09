@@ -70,7 +70,7 @@ const TableHeader = (props) => {
                 <WButton className={`sidebar-buttons undo-redo ${undoStyle}`} onClick={props.undo} wType="texted" clickAnimation="ripple-light" shape="rounded">
                 <i className="material-icons">undo</i>
                 </WButton>
-                <WButton className={`sidebar-buttons undo-redo redo" ${redoStyle}`} onClick={props.redo} wType="texted" clickAnimation="ripple-light" shape="rounded">
+                <WButton className={`sidebar-buttons undo-redo redo " ${redoStyle}`} onClick={props.redo} wType="texted" clickAnimation="ripple-light" shape="rounded">
                     <i className="material-icons">redo</i>
                 </WButton>
             </WCol>

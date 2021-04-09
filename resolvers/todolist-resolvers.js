@@ -188,6 +188,7 @@ module.exports = {
 		**/
 		sortItems: async (_, args) => {//done
 			const { _id, colNum, clickNum, prevList, execute} = args;
+			console.log(prevList);
 			const listId = new ObjectId(_id);
 			const found = await Todolist.findOne({_id: listId});
 			let listItems = found.items;
@@ -195,12 +196,11 @@ module.exports = {
 			console.log(prevList);
 			if(execute === 0)//THIS IS UNDO SETTER
 			{
-				console.log("UNDO!");
 				for(let i = 0; i<prevList.length; i++)
 				{
 					for(let j = 0; j<prevList.length; j++)
 					{
-						if(listItems[j].id == prevList[i])//found the item
+						if(listItems[j].id === prevList[i])//found the item -> multi-id items?
 						{
 							preList[i] = listItems[j];
 							j = prevList.length;
@@ -220,10 +220,6 @@ module.exports = {
 				if(colNum == 1)
 				{
 					listItems.sort(function compare(a, b) {
-						//console.log(a.description);
-						//console.log(b.description);
-						//console.log(a.description > b.description);
-						//console.log(" ");
 						if(a.description.toLowerCase()>b.description.toLowerCase()){return 1;}
 						if(a.description.toLowerCase()<b.description.toLowerCase()){return -1;}
 						return 0;
@@ -273,6 +269,7 @@ module.exports = {
 					});
 				}
 			}
+			console.log(listItems);
 			const updated = await Todolist.updateOne({_id: listId}, { items: listItems })
 			if(updated) return (listItems);
 			// return old ordering if reorder was unsuccessful
