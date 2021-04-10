@@ -4,11 +4,14 @@ import SidebarEntry from './SidebarEntry';
 const SidebarList = (props) => {
     const setSideLists = () =>
     {
-        console.log("to the top!");
+        document.onkeydown = (event) => {
+            props.handleKeyPress(event);
+        }
+        //console.log("to the top!");
         let index = props.topIndex;
         let todoLists = props.todolists;
         let newList = []; // <- Rendered
-        console.log("topIndex is: ", props.topIndex);
+        //console.log("topIndex is: ", props.topIndex);
         console.log(todoLists);
         try
         {

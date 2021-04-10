@@ -15,6 +15,8 @@ const SidebarContents = (props) => {
                 updateListField={props.updateListField}
                 swapToTop = {props.swapToTop}
                 topIndex = {props.topIndex}
+                handleKeyPress = {props.handleKeyPress}
+
             />
         </>
     );

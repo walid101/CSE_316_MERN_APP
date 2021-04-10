@@ -21,6 +21,7 @@ import WInput from 'wt-frontend/build/components/winput/WInput';
 const Homescreen = (props) => {
 
 	let todolists 							= [];
+	let ctrlPress							= 0;
 	const [activeList, setActiveList] 		= useState({});
 	const [showDelete, toggleShowDelete] 	= useState(false);
 	const [showLogin, toggleShowLogin] 		= useState(false);
@@ -229,6 +230,23 @@ const Homescreen = (props) => {
 		toggleShowDelete(!showDelete)
 	}
 
+	const handleKeyPress = (event) => {
+		if(event.key === "Control")
+		{
+			console.log("changing ctrlPRess to 1!");
+			ctrlPress = 1;
+		}
+		else if(ctrlPress === 1 && event.key === "z")
+		{
+			tpsUndo();
+		}
+		else if(ctrlPress === 1 && event.key === "y")
+		{
+			tpsRedo();
+		}
+		else {ctrlPress = 0;}
+	}
+
 	return (
 		<WLayout wLayout="header-lside">
 			<WLHeader>
@@ -259,6 +277,7 @@ const Homescreen = (props) => {
 								updateListField={updateListField}
 								swapToTop = {swapToTop}
 								topIndex = {swapTopIndex}
+								handleKeyPress = {handleKeyPress}
 							/>
 							:
 							<></>
