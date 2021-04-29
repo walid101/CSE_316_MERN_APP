@@ -1,6 +1,6 @@
 @use 'node_modules/wt-frontend/build/global/theme' with (
     $primary-color: #ffc800,
-    $background-color: rgb(64, 69, 78),//#d9d6cc,
+    $background-color: rgb(103, 139, 175),//#d9d6cc,
     $navbar-background-color: #353a44,//rgb(64, 69, 78),
     $sidebar-background-color: #2b2e36,//#353a44,
     $text-color: #e9edf0,
@@ -178,10 +178,17 @@ html, body {
 }
 
 .navbar-options {
-    color: $text-color;
+    color: rgb(73, 212, 115);
     font-size: 16px;
 }
-
+.navbar-update-options {
+    color: rgb(179, 187, 255);
+    font-size: 16;
+}
+.sign-up {
+    color: rgb(179, 187, 255);
+    font-size: 16;
+}
 .cancel-button {
     color: $text-color;
 }
@@ -210,4 +217,8 @@ html, body {
 }
 .topArrow-black {
     color: black
+}
+.title-card {
+    color: $primary-color;
+    font-family: 'Courier New', Courier, monospace;
 }

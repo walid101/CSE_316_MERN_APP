@@ -5,6 +5,7 @@ import MainContents 					from '../main/MainContents';
 import SidebarContents 					from '../sidebar/SidebarContents';
 import Login 							from '../modals/Login';
 import Delete 							from '../modals/Delete';
+import Update 							from '../modals/Update';
 import CreateAccount 					from '../modals/CreateAccount';
 import { GET_DB_TODOS } 				from '../../cache/queries';
 import * as mutations 					from '../../cache/mutations';
@@ -27,6 +28,7 @@ const Homescreen = (props) => {
 	const [showLogin, toggleShowLogin] 		= useState(false);
 	const [swapTopIndex, toggleTopIndex] 	= useState(-1);
 	const [runId, toggleRunId] 				= useState(0);	
+	const [showUpdate, toggleShowUpdate]	= useState(false);
 	const [, updateState] = React.useState();
 	const forceUpdate = React.useCallback(() => updateState({}), []);
 	/*
@@ -215,20 +217,31 @@ const Homescreen = (props) => {
 	const setShowLogin = () => {
 		toggleShowDelete(false);
 		toggleShowCreate(false);
+		toggleShowUpdate(false);
 		toggleShowLogin(!showLogin);
 	};
 
 	const setShowCreate = () => {
 		toggleShowDelete(false);
 		toggleShowLogin(false);
+		toggleShowUpdate(false);
 		toggleShowCreate(!showCreate);
+	};
+
+	const setShowUpdate = () => {
+		console.log("updating....");
+		toggleShowDelete(false);
+		toggleShowLogin(false);
+		toggleShowCreate(false);
+		toggleShowUpdate(!showUpdate);
 	};
 
 	const setShowDelete = () => {
 		toggleShowCreate(false);
 		toggleShowLogin(false);
+		toggleShowUpdate(false);
 		toggleShowDelete(!showDelete)
-	}
+	};
 
 	const handleKeyPress = (event) => {
 		if(event.key === "Control")
@@ -259,8 +272,10 @@ const Homescreen = (props) => {
 					<ul>
 						<NavbarOptions
 							fetchUser={props.fetchUser} auth={auth} 
+							setShowUpdate={setShowUpdate}
 							setShowCreate={setShowCreate} setShowLogin={setShowLogin}
 							refetchTodos={refetch} setActiveList={setActiveList}
+							user={props.user}
 						/>
 					</ul>
 				</WNavbar>
@@ -315,6 +330,9 @@ const Homescreen = (props) => {
 
 			{
 				showLogin && (<Login showLogin = {showLogin} fetchUser={props.fetchUser} refetchTodos={refetch}setShowLogin={setShowLogin} />)
+			}
+			{
+				showUpdate && (<Update user={props.user} showUpdate = {showUpdate} fetchUser={props.fetchUser} refetchTodos={refetch} setShowUpdate={setShowUpdate}/>)
 			}
 
 		</WLayout>

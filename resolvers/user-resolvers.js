@@ -82,6 +82,30 @@ module.exports = {
 			res.clearCookie('refresh-token');
 			res.clearCookie('access-token');
 			return true;
+		},
+
+		update: async (_, args, { res }) => {
+			const {email, newEmail, newPassword, newFirstName, newLastName } = args;
+			const user = await User.findOne({email: email});
+			if(!user) return({});
+			if(newEmail !== "")
+			{
+				await user.updateOne({email: newEmail});
+			}
+			if(newPassword !== "")
+			{
+				await user.updateOne({password: newPassword});
+			}
+			if(newFirstName !== "")
+			{
+				await user.updateOne({firstName: newFirstName});
+			}
+			if(newLastName !== "")
+			{
+				await user.updateOne({lastName: newLastName});
+			}
+			//edit the user info here! //USING replaceOne
+			return user;
 		}
 	}
 }

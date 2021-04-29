@@ -1,10 +1,10 @@
 import React 			from 'react';
 import Homescreen 		from './components/homescreen/Homescreen';
+import Homepage			from './components/Pages/Homepage';
 import { useQuery } 	from '@apollo/client';
 import * as queries 	from './cache/queries';
 import { jsTPS } 		from './utils/jsTPS';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
- 
+import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 const App = () => {
 	let user = null;
     let transactionStack = new jsTPS();
@@ -16,21 +16,28 @@ const App = () => {
 		let { getCurrentUser } = data;
 		if(getCurrentUser !== null) { user = getCurrentUser; }
     }
-
+//<Redirect exact from="/" to={ {pathname: "/regions"} } /> ->before <Route to regions
 	return(
-		<BrowserRouter>
+		<Router>
 			<Switch>
 				<Redirect exact from="/" to={ {pathname: "/home"} } />
 				<Route 
 					path="/home" 
 					name="home" 
 					render={() => 
+						<Homepage tps={transactionStack} fetchUser={refetch} user={user} />
+					} 
+				/>
+				<Route 
+					path="/maps" 
+					name="maps" 
+					render={() => 
 						<Homescreen tps={transactionStack} fetchUser={refetch} user={user} />
 					} 
 				/>
 				<Route/>
 			</Switch>
-		</BrowserRouter>
+		</Router>
 	);
 }
 
