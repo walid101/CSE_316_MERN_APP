@@ -21,32 +21,6 @@ const Update = (props) => {
 		const {loading, error, data} = await Update({variables: {...input} });
 		if (loading) { toggleLoading(true) };
 		if (error) { return `Error: ${error.message}` };
-		/*
-		for (let field in input) {
-			if (!input[field]) {
-				alert('All fields must be filled out to register');
-				return;
-			}
-		}
-		*/
-        /*
-		const { loading, error, data } = await Register({ variables: { ...input } });
-		if (loading) { toggleLoading(true) };
-		if (error) { return `Error: ${error.message}` };
-		if (data) {
-			console.log(data)
-			toggleLoading(false);
-			if(data.register.email === 'already exists') {
-				alert('User with that email already registered');
-			}
-			else {
-				props.fetchUser();
-			}
-			props.setShowCreate(false);
-
-		};
-        */
-	   console.log("Updating Account...");
 	};
 
 	return (
@@ -54,7 +28,7 @@ const Update = (props) => {
 
 		<WModal className="signup-modal" visible = {props.showUpdate}>
 			<WMHeader className="modal-header" onClose={() => props.setShowUpdate(false)}>
-				Update Account Info
+				Update Account
 			</WMHeader>
 			{
 				loading ? <div />
